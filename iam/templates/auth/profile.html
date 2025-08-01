@@ -1,0 +1,12 @@
+{% extends 'base/basic.html' %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Welcome {{ user.full_name }}</h2>
+<ul class="list-group">
+    <li class="list-group-item">Email: {{ user.email }}</li>
+    <li class="list-group-item">Username: {{ user.userName }}</li>
+    <li class="list-group-item">User ID: {{ user.user_id }}</li>
+</ul>
+<a href="{% url 'logout' %}" class="btn btn-danger mt-3 w-100">Logout</a>
+{% endblock %}
