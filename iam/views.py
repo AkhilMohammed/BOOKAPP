@@ -45,6 +45,10 @@ class RegistrationView(APIView):
                 otp = generate_otp()
                 existing_user.otp = otp
                 existing_user.otp_expiry = timezone.now() + timedelta(minutes=5)
+                existing_user.password = request.data.get('password') 
+                existing_user.user_name = request.data.get('user_name') 
+                existing_user.first_name = request.data.get('first_name')  # Keep the existing first_name
+                existing_user.last_name = request.data.get('last_name')  # Keep the existing last_name
                 existing_user.save()
                 send_mail(
                     'Your OTP for Book Online Sales',
@@ -97,12 +101,7 @@ class VerifyOTPView(APIView):
         email = serializer.validated_data['email']
         otp = serializer.validated_data['otp']
         try:
-            logger.debug("Attempting to verify OTP for user: %s", email)
-            user_list = User.objects.all()
-            logger.debug("*****************************")
-            logger.debug("Total users in database: %d", user_list.count(),user_list)
             user = User.objects.get(email=email)
-            logger.debug("User found: %s", user)
             if user.otp == otp:
                 if timezone.now() <= user.otp_expiry:
                     user.is_active = True
