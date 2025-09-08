@@ -1,0 +1,155 @@
+{% extends 'base/basic.html' %}
+{% block title %}Create your account · MyShop{% endblock %}
+
+{% block content %}
+<div class="glass-card p-4 p-md-5">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Create your MyShop account</h2>
+    <a href="{% url 'login_view' %}" class="small text-decoration-none">Have an account? Sign in</a>
+  </div>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required>
+          <label for="first_name"><i class="bi bi-person me-2"></i>First name</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" required>
+          <label for="last_name"><i class="bi bi-person-badge me-2"></i>Last name</label>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="email" name="email" id="email" class="form-control" placeholder="name@example.com" required>
+          <label for="email"><i class="bi bi-envelope me-2"></i>Email address</label>
+        </div>
+        <div class="form-text">We’ll send order updates and verification to this email.</div>
+      </div>
+
+      <div class="col-12">
+        <div class="input-group">
+          <div class="form-floating flex-grow-1">
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" minlength="8" required>
+            <label for="password"><i class="bi bi-shield-lock me-2"></i>Password (min 8 chars)</label>
+          </div>
+          <button class="btn btn-outline-secondary" type="button" id="togglePwd" aria-label="Show password">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+
+        <!-- Strength meter -->
+        <div class="progress mt-2" style="height:6px;">
+          <div class="progress-bar" id="pwdStrength" role="progressbar" style="width:0%"></div>
+        </div>
+        <div class="d-flex justify-content-between small mt-1">
+          <span id="pwdHint" class="text-secondary">Use letters, numbers & symbols</span>
+          <span id="pwdScore" class="text-secondary">Weak</span>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" name="user_name" id="user_name" class="form-control" placeholder="Username" required>
+          <label for="user_name"><i class="bi bi-at me-2"></i>Username</label>
+        </div>
+      </div>
+      <div class="col-12">
+      <div class="form-floating">
+        <select name="user_type" id="user_type" class="form-select" required>
+          <option value="" disabled selected>Select role</option>
+          <option value="admin">Admin</option>
+          <option value="customer">Customer</option>
+          <option value="vendor">Vendor</option>
+          <option value="delivery">Delivery</option>
+          <option value="superadmin">SuperAdmin</option>
+        </select>
+        <label for="user_type"><i class="bi bi-people me-2"></i>User Type</label>
+      </div>
+    </div>
+
+      <!-- Optional phone – uncomment if needed
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone">
+          <label for="phone"><i class="bi bi-phone me-2"></i>Phone (optional)</label>
+        </div>
+      </div>
+      -->
+
+      <div class="col-12">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="1" id="terms" required>
+          <label class="form-check-label" for="terms">
+            I agree to the <a href="#" class="text-decoration-none">Terms</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>.
+          </label>
+        </div>
+      </div>
+
+      <div class="col-12 mt-2 d-grid">
+        <button type="submit" class="btn btn-brand btn-lg">Create account</button>
+      </div>
+
+      <div class="col-12">
+        <hr class="my-4">
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-outline-dark">
+            <i class="bi bi-google me-2"></i>Continue with Google
+          </button>
+          <button type="button" class="btn btn-outline-primary">
+            <i class="bi bi-facebook me-2"></i>Continue with Facebook
+          </button>
+        </div>
+        <p class="text-secondary small mt-3 mb-0">
+          We’ll never share your details. You can change preferences anytime.
+        </p>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Show/Hide password
+  const pwd = document.getElementById('password');
+  const toggle = document.getElementById('togglePwd');
+  const icon = toggle.querySelector('i');
+  toggle.addEventListener('click', () => {
+    const show = pwd.type === 'password';
+    pwd.type = show ? 'text' : 'password';
+    icon.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
+    toggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+  });
+
+  // Simple password strength meter
+  const bar = document.getElementById('pwdStrength');
+  const hint = document.getElementById('pwdHint');
+  const scoreLabel = document.getElementById('pwdScore');
+  const calcScore = (val) => {
+    let s = 0;
+    if (val.length >= 8) s += 20;
+    if (/[A-Z]/.test(val)) s += 20;
+    if (/[a-z]/.test(val)) s += 20;
+    if (/\d/.test(val)) s += 20;
+    if (/[^A-Za-z0-9]/.test(val)) s += 20;
+    return s;
+  };
+  pwd.addEventListener('input', e => {
+    const v = e.target.value;
+    const s = calcScore(v);
+    bar.style.width = s + '%';
+    bar.classList.remove('bg-danger','bg-warning','bg-success');
+    if (s < 40) { bar.classList.add('bg-danger'); scoreLabel.textContent = 'Weak'; }
+    else if (s < 80) { bar.classList.add('bg-warning'); scoreLabel.textContent = 'Medium'; }
+    else { bar.classList.add('bg-success'); scoreLabel.textContent = 'Strong'; }
+    hint.textContent = s < 80 ? 'Add uppercase, numbers & symbols' : 'Looks good!';
+  });
+</script>
+{% endblock %}

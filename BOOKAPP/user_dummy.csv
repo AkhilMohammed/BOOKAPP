@@ -1,0 +1,11 @@
+id,password,last_login,created_at,updated_at,email,first_name,last_name,is_active,is_staff,phone_number,user_name,address,otp,user_type,is_verified,otp_expiry
+1649324154764,password123,2022-04-05T14:30:00,2022-04-05T14:30:00,2022-04-05T14:30:00,user1@example.com,John,Doe,True,False,1234567890,johndoe,123 Main St,123456,customer,True,2022-04-05T14:30:00
+1649324154765,password456,2022-04-06T14:30:00,2022-04-06T14:30:00,2022-04-06T14:30:00,user2@example.com,Jane,Smith,True,False,9876543210,janesmith,456 Elm St,654321,vendor,True,2022-04-06T14:30:00
+1649324154766,password789,2022-04-07T14:30:00,2022-04-07T14:30:00,2022-04-07T14:30:00,user3@example.com,Bob,Johnson,True,False,5551234567,bobjohnson,789 Oak St,789012,customer,True,2022-04-07T14:30:00
+1649324154767,password012,2022-04-08T14:30:00,2022-04-08T14:30:00,2022-04-08T14:30:00,user4@example.com,Alice,Williams,True,False,9012345678,alicewilliams,321 Pine St,345678,vendor,True,2022-04-08T14:30:00
+1649324154768,password345,2022-04-09T14:30:00,2022-04-09T14:30:00,2022-04-09T14:30:00,user5@example.com,Mike,Davis,True,False,1112223333,mikedavis,456 Maple St,567890,customer,True,2022-04-09T14:30:00
+1649324154769,password678,2022-04-10T14:30:00,2022-04-10T14:30:00,2022-04-10T14:30:00,user6@example.com,Emily,Miller,True,False,4445556666,emilymiller,789 Cedar St,890123,vendor,True,2022-04-10T14:30:00
+1649324154770,password901,2022-04-11T14:30:00,2022-04-11T14:30:00,2022-04-11T14:30:00,user7@example.com,Sarah,Wilson,True,False,7778889999,sarahwilson,321 Spruce St,123456,customer,True,2022-04-11T14:30:00
+1649324154771,password234,2022-04-12T14:30:00,2022-04-12T14:30:00,2022-04-12T14:30:00,user8@example.com,David,Moore,True,False,3334445555,davidmoore,456 Fir St,654321,vendor,True,2022-04-12T14:30:00
+1649324154772,password567,2022-04-13T14:30:00,2022-04-13T14:30:00,2022-04-13T14:30:00,user9@example.com,Olivia,Taylor,True,False,2223334444,oliviataylor,789 Beech St,789012,customer,True,2022-04-13T14:30:00
+1649324154773,password890,2022-04-14T14:30:00,2022-04-14T14:30:00,2022-04-14T14:30:00,user10@example.com,Ava,Anderson,True,False,6667778888,avaanderson,321 Birch St,345678,vendor,True,2022-04-14T14:30:00

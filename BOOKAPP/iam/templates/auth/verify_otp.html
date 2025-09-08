@@ -1,0 +1,64 @@
+{% extends 'base/basic.html' %}
+{% load static %}
+{% block title %}BooksApp | Verify OTP{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card shadow-lg p-4" style="max-width: 420px; width: 100%; border-radius: 12px;">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/logo.png' %}" alt="BooksApp Logo" width="60">
+            <h4 class="mt-2">OTP Verification</h4>
+            <p class="text-muted small">Enter the 6-digit OTP sent to <b>{{ email }}</b></p>
+        </div>
+
+        <form method="post" id="otpForm">
+            {% csrf_token %}
+
+            <!-- Hidden field where final OTP will be stored -->
+            <input type="hidden" name="otp" id="otp">
+
+            <div class="d-flex justify-content-between mb-3">
+                {% for i in "123456" %}
+                    <input type="text" maxlength="1" class="form-control text-center fw-bold otp-input" style="width: 50px; font-size: 20px;" required>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100 fw-bold" style="border-radius: 8px;">Verify OTP</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <small class="text-muted">Didn’t receive OTP? 
+                <a href="#" class="text-decoration-none fw-bold">Resend</a>
+            </small>
+        </div>
+    </div>
+</div>
+
+<script>
+    const inputs = document.querySelectorAll(".otp-input");
+    const otpField = document.getElementById("otp");
+    const form = document.getElementById("otpForm");
+
+    // Auto move to next input
+    inputs.forEach((input, index) => {
+        input.addEventListener("input", () => {
+            if (input.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+            collectOtp();
+        });
+
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !input.value && index > 0) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+
+    function collectOtp() {
+        let otp = "";
+        inputs.forEach(input => otp += input.value);
+        otpField.value = otp;
+    }
+</script>
+{% endblock %}
