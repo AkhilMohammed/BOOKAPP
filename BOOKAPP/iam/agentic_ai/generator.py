@@ -37,7 +37,7 @@ class SynthGenerator:
         logger.info(f"Initialized SynthGenerator for {Model._meta.label} with batch={self.max_batch}")
         logger.debug(f"Schema metadata: {self.schema_meta}")
 
-        groq_key = api_key or os.getenv("GROQ_API_KEY", "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")
+        groq_key = api_key or os.getenv("GROQ_API_KEY","")
         if not groq_key:
             raise ValueError("Groq API key must be provided via argument or environment variable")
 
